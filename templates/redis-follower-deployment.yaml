@@ -1,0 +1,30 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redisFollower.name }}
+  labels:
+    app: {{ .Values.redisFollower.labels.app }}
+    role: {{ .Values.redisFollower.labels.role }}
+    tier: {{ .Values.redisFollower.labels.tierr }}
+spec:
+  replicas: {{ .Values.redisFollower.replicaSet }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redisFollower.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redisFollower.labels.app }}
+        role: {{ .Values.redisFollower.labels.role }}
+        tier: {{ .Values.redisFollower.labels.tier }}
+    spec:
+      containers:
+      - name: {{ .Values.redisFollower.containerName }}
+        image: {{ .Values.redisFollower.containerImage }}
+        resources:
+          requests:
+            cpu: {{ .Values.redisFollower.containerCPU }}
+            memory: {{ .Values.redisFollower.containerMemory }}
+        ports:
+        - containerPort: {{ .Values.redisFollower.containerPort }}
